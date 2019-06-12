@@ -50,10 +50,13 @@ bin/kafka-topics.sh --zookeeper 172.16.91.199:2181 --create --replication-factor
  kafka处理消息的方式是 时间窗口，不是一条一条的拉取，一次拉取的是一个时间窗口的消息，所以拉取回来的数据ConsumerRecords要循环遍历消费。
 
  总结：
- ----
- #####1.一条消息最终落在某个主题的某个分区中。<br/>
- #####2.客户端：生产者，消费者<br/>
- #####3.生产者：<br/>
+ ======
+ 1.一条消息最终落在某个主题的某个分区中。<br/>
+ -----
+ 2.客户端：生产者，消费者<br/>
+ -----
+ 3.生产者：<br/>
+ ------
  		消息分区的选择：
  			a、null-key：轮询所有分区，负载均衡
  			b、key：hash（key）% 分区数
@@ -67,7 +70,8 @@ bin/kafka-topics.sh --zookeeper 172.16.91.199:2181 --create --replication-factor
  					-1 不等待
  					0  leader成功就算成功，等待leader的反馈
  					all  所有的都要成功，等待所有副本的反馈
-#####4.消费者：<br/>
+4.消费者：<br/>
+----------
 	重复消费：
 		1.重复消费：不同的消费者组可以实现重复消费
 		2.不重复消费：同一个消费者组
@@ -80,19 +84,23 @@ bin/kafka-topics.sh --zookeeper 172.16.91.199:2181 --create --replication-factor
 			手段：
 				** 将所有的数据指定到一个分区中。
 				** 只设置一个分区。
-#####5.拦截器：<br/>
+5.拦截器：<br/>
+----------
 	实现接口：ProducerInterceptor
 	可以实现拦截器链，实现消息发送前后的加工，还有统计。
 
-#####6.kafka stream：<br/>
+6.kafka stream：<br/>
+--------
 	流式处理框架
 	1.实现Processor ，重写process方法，在方法里面实现数据的清洗逻辑。
 	2.创建一个主启动类，根据配置实例化streamConfig，构建拓扑TopologyBuilder，实例化KafkaStreams并执行。  
 
-#####7.Kafka的物理模型<br/>
+7.Kafka的物理模型<br/>
+--------
 	生产者组-->broker集群，每个broker有多个topic(topic集群共享)，每个topic有多个partition（partition也是集群共享，每个broker都有相同的主题，拥有相同的分区，但是只有一份broker上的partition是leader），不同的broker之间partiton进行备份冗余，只有leader分区是可见的，可以写入数据，当其中一个broker宕机后，会选举新的leader。
 
-#####8.消息丢失和重复消费的问题<br/>
+8.消息丢失和重复消费的问题<br/>
+---------
 	a消息丢失：在kafka的高级api中，消费者会自动每隔一段时间将offset保存到zookeeper上，此时如果刚好将偏移量提交到zookeeper上，而消息还没有处理完毕，机器发生宕机，就会导致消息消费丢失。
 		解决办法：关闭自动提交offset，改成手动提交offset，每次数据处理完之后再提交offset
 	b消息重复消费：offset提交到zookeeper之后，程序又消费了几条数据，但是还没有到下一次提交offset的时间，机器发生了宕机，此时重启消费者会去读取zookeeper上的偏移量进行消费，导致消息的重复消费。
