@@ -61,7 +61,7 @@ public class CustomProducer1 {
         //3.调用Producer的send方法，进行消息的发送
         for (int i = 0;i<50;i++){
             //每条发送的消息都必须封装为 producerRecord对象
-            producer.send(new ProducerRecord<String, String>("test2","value--"+i));
+            producer.send(new ProducerRecord<String, String>("test2","value>>>>>"+i));
         }
 
 

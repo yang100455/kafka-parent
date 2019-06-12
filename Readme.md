@@ -1,6 +1,14 @@
 kafka集群的部署,Centos7*3,zookeeper*3,Kafka*3
 =======
 
+以module kafka_syllabus为例
+------
+    1 .consumer为消费者：消息的消费者，消费者主动拉取消息。
+    2.interceptor为拦截器：对发送的消息进行拦截处理，或者统计。
+    3.partitioner为自定义分区，否则按照规则分配分区（下面有详情介绍）
+    4.producer为生产者,指定配置文件，new生产者对象，将消息封装为producerRecord对象
+    5.stream为流处理,可以对topicA的数据进行处理，然后送到topicB。
+
 -----  
 查看当前kafka集群中已经创建topic主题<br/> 
 bin/kafka-topics.sh --zookeeper localhost:2181 --list

@@ -55,11 +55,11 @@ public class CustomProducer2 {
         //3.调用Producer的send方法，进行消息的发送
         for (int i = 0; i < 50; i++) {
             //每条发送的消息都必须封装为 producerRecord对象
-            producer.send(new ProducerRecord<String, String>("test2", "value--" + i), new Callback() {
+            producer.send(new ProducerRecord<String, String>("test2", "key"+i,"value" + i), new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (recordMetadata != null) {
-                        System.out.println(recordMetadata.offset() + "--" + recordMetadata.partition() + "--" + recordMetadata.serializedKeySize());
+                        System.out.println("offset:"+recordMetadata.offset() + ", partition:" + recordMetadata.partition() + ", serializedkeySize:" + recordMetadata.serializedKeySize());
                     }
                 }
             });

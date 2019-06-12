@@ -31,7 +31,7 @@ public class CustomConsumer1 {
         //定义kafka地址
         props.put("bootstrap.servers", "centos1:9092");
         //设置消费组
-        props.put("group.id", "g1");
+        props.put("group.id", "g2");
         //是否自动确认offset
         props.put("enable.auto.commit", "true");
         // key的反序列化类
@@ -57,7 +57,7 @@ public class CustomConsumer1 {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
-                System.out.println(record.offset() + "___" + record.key() + "___" + record.value());
+                System.out.println("offset:"+record.offset() + "___key:" + record.key() + "___value:" + record.value());
             }
         }
 

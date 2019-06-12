@@ -43,7 +43,7 @@ public class CustomConsumer {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
         // 消费者订阅的topic, 可同时订阅多个
-        consumer.subscribe(Arrays.asList("test2"));
+        consumer.subscribe(Arrays.asList("test3"));
 
         while (true) {
             // 读取数据，读取超时时间为100ms

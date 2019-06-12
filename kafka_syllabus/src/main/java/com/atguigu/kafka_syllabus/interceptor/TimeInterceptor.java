@@ -26,7 +26,7 @@ public class TimeInterceptor implements ProducerInterceptor<String, String> {
     @Override
     public ProducerRecord<String, String> onSend(ProducerRecord<String, String> producerRecord) {
         //数据加工
-
+        System.out.println("对数据进行清洗："+ producerRecord.value());
         return new ProducerRecord<String, String>(producerRecord.topic(),
                 producerRecord.partition(),
                 producerRecord.key(),
