@@ -1,4 +1,4 @@
-kafka集群的部署,Centos7*3,zookeeper*3,Kafka*3
+kafka集群的部署,Centos7 x 3,zookeeper x 3,Kafka x 3 
 =======
 
 以module kafka_syllabus为例
